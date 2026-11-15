@@ -1,9 +1,14 @@
+
+import os
+os.environ["PYDANTIC_AI_NO_BANNER"] = "1"
+
 from pydantic_ai import Agent
 
 agent = Agent(
-    "anthropic:claude-haiku-5-5",
+    "openai:gpt-5.2",
     instructions="Answer briefly.",
 )
 
 result = agent.run_sync("Please book me a hairdresser appointment for Friday.")
+
 print(result.output)
