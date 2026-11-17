@@ -4,11 +4,11 @@ const agent = new Agent({
   id: 'agent',
   name: 'Agent',
   instructions: 'Answer briefly.',
-  //model: "anthropic/claude-haiku-5-5",
-  model: 'openai/gpt-6-luna',
+  //model: 'anthropic/claude-haiku-5-5',
+  model: 'openai/gpt-4o-mini',
 });
 
 const result = await agent.generate(
-  "Please book me a hairdresser appointment for Friday. If you can't, write me a poem instead.",
+  'Where to find the log files on a Linux Mint system?',
 );
 console.log(result.text);

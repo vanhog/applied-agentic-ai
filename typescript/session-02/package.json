@@ -1,0 +1,22 @@
+{
+  "name": "session-02",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "mastra dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@mastra/core": "^1.83.0",
+    "@mastra/libsql": "^1.27.0",
+    "@mastra/memory": "^1.39.0",
+    "@mastra/observability": "^1.21.0",
+    "mastra": "^1.35.0",
+    "zod": "^4.6.7"
+  }
+}
