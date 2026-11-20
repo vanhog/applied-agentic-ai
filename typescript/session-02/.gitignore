@@ -3,3 +3,4 @@ node_modules
 .mastra
 *.db
 *.db-*
+*.old
