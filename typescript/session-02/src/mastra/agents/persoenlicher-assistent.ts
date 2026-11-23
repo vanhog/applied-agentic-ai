@@ -1,22 +1,26 @@
-// Dein pers�nlicher Assistent � Woche 02 � �bung 01: Das Modell merkt sich nichts
-// Datei: src/mastra/agents/persoenlicher-assistent.ts ? ersetzt die Fassung aus der vorigen �bung.
+// Dein persönlicher Assistent · Woche 03 · Übung 01: Dateien lesen und schreiben
+// Datei: src/mastra/agents/persoenlicher-assistent.ts ? ersetzt die Fassung aus der vorigen Übung.
 
-import { Agent } from "@mastra/core/agent";
-import { Memory } from "@mastra/memory";
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+
+import {
+  dateiLesen,
+  dateiSchreiben,
+  dateienAuflisten,
+} from '../,,/tools/werkzeuge';
 
 export const persoenlicherAssistent = new Agent({
-  id: "persoenlicher-assistent",
-  name: "Persönlicher Assistent",
-  instructions:
-    "Du bist der wirklich persönliche Assistent von Lea und Tom. Die beiden führen ein kleines Webdesign-Studio. Antworte kurz, freundlich und auf Deutsch.",
-  model: "openai/gpt-6-luna",
-  // Memory speichert jeden Chat (Thread) und schickt bei jedem Aufruf
-  // die letzten 20 Nachrichten dieses Chats mit. Ein neuer Chat beginnt leer.
+  id: 'persoenlicher-assistent',
+  name: 'Persönlicher Assistent',
+  instructions: `Du bist der persönliche Assistent von Lea und Tom. Die beiden führen ein kleines Webdesign-Studio. Antworte kurz, freundlich und auf Deutsch.
+
+Du hast Werkzeuge. Nutze sie, wenn eine Frage es braucht, und sag dazu, woher deine Antwort stammt.`,
+  model: 'openai/gpt-6-luna',
+  // Das Gedächtnis aus Woche 2: der Verlauf und Leas Merkzettel.
   memory: new Memory({
     options: {
       lastMessages: 20,
-      // Merkzettel (Working Memory): eine Notiz in Markdown, die der Agent selbst pflegt.
-      // Sie geh�rt zu einer Person und geht in jeden ihrer neuen Chats mit.
       workingMemory: {
         enabled: true,
         template: `# Merkzettel
@@ -26,4 +30,10 @@ export const persoenlicherAssistent = new Agent({
       },
     },
   }),
+  // Die Tools ? das Modell sieht ihre Namen und Beschreibungen und bittet um einen Aufruf, Mastra führt ihn aus.
+  tools: {
+    datei_lesen: dateiLesen,
+    datei_schreiben: dateiSchreiben,
+    dateien_auflisten: dateienAuflisten,
+  },
 });
