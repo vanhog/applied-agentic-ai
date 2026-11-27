@@ -1,4 +1,4 @@
-// Die Tools deines Assistenten · Woche 03 · Übung 01: Dateien lesen und schreiben
+// Die Tools deines Assistenten · Woche 03 · Übung 02: Dateien durchsuchen
 // Datei: src/mastra/tools/werkzeuge.ts ? ersetzt die Fassung aus der vorigen Übung.
 
 import { existsSync } from 'node:fs';
@@ -94,5 +94,34 @@ export const dateienAuflisten = createTool({
     return files.length
       ? files.map((file) => relative(FOLDER, file)).join('\n')
       : 'Die Ablage ist leer.';
+  },
+});
+
+// Höchstens 20 Treffer ? gibt es mehr, sagt ein Hinweis, wie das Modell genauer suchen kann.
+export const dateienDurchsuchen = createTool({
+  id: 'dateien_durchsuchen',
+  description:
+    'Durchsucht alle Textdateien der Ablage und gibt jeden Treffer als Datei:Zeile: Textstelle zurück.',
+  inputSchema: z.object({
+    suchbegriff: z
+      .string()
+      .describe('Wort oder Satzteil, nach dem gesucht wird'),
+  }),
+  execute: async ({ suchbegriff }) => {
+    const hits: string[] = [];
+    for (const file of existsSync(FOLDER) ? await allFiles(FOLDER) : []) {
+      if (!/\.(md|txt|csv|json)$/i.test(file)) continue;
+      const lines = (await readFile(file, 'utf8')).split('\n');
+      lines.forEach((line, index) => {
+        if (line.toLowerCase().includes(suchbegriff.toLowerCase()))
+          hits.push(`${relative(FOLDER, file)}:${index + 1}: ${line.trim()}`);
+      });
+    }
+    if (hits.length === 0)
+      return `Keine Treffer für ?${suchbegriff}?. Versuch ein anderes Wort.`;
+    const shown = hits.slice(0, 20).join('\n');
+    return hits.length > 20
+      ? `${shown}\n${hits.length - 20} weitere Treffer. Such genauer, etwa mit einem zweiten Begriff.`
+      : shown;
   },
 });
