@@ -1,22 +1,22 @@
 // Dein persönlicher Assistent · Woche 03 · Übung 01: Dateien lesen und schreiben
 // Datei: src/mastra/agents/persoenlicher-assistent.ts ? ersetzt die Fassung aus der vorigen Übung.
 
-import { Agent } from '@mastra/core/agent';
-import { Memory } from '@mastra/memory';
+import { Agent } from "@mastra/core/agent";
+import { Memory } from "@mastra/memory";
 
 import {
   dateiLesen,
   dateiSchreiben,
   dateienAuflisten,
-} from '../,,/tools/werkzeuge';
+} from "../tools/werkzeuge";
 
 export const persoenlicherAssistent = new Agent({
-  id: 'persoenlicher-assistent',
-  name: 'Persönlicher Assistent',
+  id: "persoenlicher-assistent",
+  name: "Persönlicher Assistent",
   instructions: `Du bist der persönliche Assistent von Lea und Tom. Die beiden führen ein kleines Webdesign-Studio. Antworte kurz, freundlich und auf Deutsch.
 
 Du hast Werkzeuge. Nutze sie, wenn eine Frage es braucht, und sag dazu, woher deine Antwort stammt.`,
-  model: 'openai/gpt-6-luna',
+  model: "openai/gpt-6-luna",
   // Das Gedächtnis aus Woche 2: der Verlauf und Leas Merkzettel.
   memory: new Memory({
     options: {
